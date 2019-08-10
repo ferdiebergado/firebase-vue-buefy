@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-
+    appTitle: 'Vue Firebase SPA',
+    author: 'Ferdinand Saporas Bergado',
   },
   mutations: {
 
