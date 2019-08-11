@@ -11,11 +11,21 @@
     </template>
 
     <template slot="end">
-      <b-navbar-item tag="div">
+      <b-navbar-item v-if="user" tag="div">
         <div class="buttons">
-          <router-link class="button is-primary" to="/signup">
-            <strong>Sign up</strong>
+          <router-link to="/">
+            <strong>{{ user }}</strong>
           </router-link>
+          <b-button @click="signout()">
+            <strong>Sign Out</strong>
+          </b-button>
+        </div>
+      </b-navbar-item>
+      <b-navbar-item v-else tag="div">
+        <div class="buttons">
+          <b-button tag="router-link" type="is-link" to="/signup">
+            <strong>Sign up</strong>
+          </b-button>
           <a class="button is-light">Log in</a>
         </div>
       </b-navbar-item>
@@ -24,10 +34,18 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      appTitle: this.$store.state.appTitle
-    };
+  computed: {
+    appTitle() {
+      return this.$store.state.appTitle;
+    },
+    user() {
+      return this.$store.state.user;
+    }
+  },
+  methods: {
+    signout() {
+      this.$store.dispatch("signOut");
+    }
   }
 };
 </script>

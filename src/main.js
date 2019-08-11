@@ -5,26 +5,36 @@ import Input from 'buefy/dist/components/input';
 import './assets/scss/app.scss';
 import '@mdi/font/css/materialdesignicons.css';
 
-// import * as firebase from 'firebase/app';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
 
-// import firebaseConfig from './firebase.config';
+import firebaseConfig from './firebase.config';
 
 Vue.config.productionTip = false;
 
-// firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
 Vue.use(Navbar);
 Vue.use(Button);
 Vue.use(Field);
 Vue.use(Input);
 
-new Vue({
-  router,
-  store,
-  render: h => h(App),
-}).$mount('#app');
+const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App),
+    created() {
+      if (user) {
+        // User is signed in.
+        store.commit('setUser', user.email);
+      }
+    },
+  }).$mount('#app');
+  unsubscribe();
+});

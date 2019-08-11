@@ -1,6 +1,6 @@
 <template>
-  <div class="column is-half is-offset-one-quarter">
-    <section class="hero">
+  <div class="column">
+    <section class="hero is-info is-bold">
       <div class="hero-body">
         <div class="container">
           <h1 class="title">{{ title }}</h1>
